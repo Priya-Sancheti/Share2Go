@@ -31,4 +31,5 @@ dependencies {
     compile files('src/httpclient-4.0.3.jar')
     compile files('src/json-lib-2.4-jdk15.jar')
     compile files('src/json-smart-1.0.8.jar')
+    compile 'com.google.android.gms:play-services:8.4.0'
 }

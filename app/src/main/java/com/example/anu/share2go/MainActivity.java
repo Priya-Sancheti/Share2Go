@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         Drawable background = backgroundImage.getBackground();
         background.setAlpha(200);
 
-       }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

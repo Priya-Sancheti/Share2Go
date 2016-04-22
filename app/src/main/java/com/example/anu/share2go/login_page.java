@@ -23,7 +23,7 @@ public class login_page extends AppCompatActivity {
     com.example.anu.share2go.JSONParser jsonParser=new com.example.anu.share2go.JSONParser();
     EditText email=null;
     EditText pass=null;
-    private static String url_create_product = "http://172.16.89.60:9090/WebApplication2/login.jsp";
+    private static String url_create_product = "http://172.16.93.38:8084/WebApplication2/login.jsp";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

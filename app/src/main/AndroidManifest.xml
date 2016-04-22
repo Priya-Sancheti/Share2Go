@@ -7,12 +7,20 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+   <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCGf0CT2q-UPf2ufgkrAyIcbTGLHZMkjQ0" />
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -29,6 +37,11 @@
         <activity android:name=".CarPooling"></activity>
         <activity android:name=".Offer_Ride"></activity>
         <activity android:name=".Take_A_Ride"></activity>
+        <activity android:name=".c2c_offer"></activity>
+        <activity android:name=".c2c_take"></activity>
+        <activity android:name=".car_detail"></activity>
+        <activity android:name=".City2City"></activity>
+
 
     </application>
 

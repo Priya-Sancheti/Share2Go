@@ -1,117 +1,217 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+
+
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@drawable/back2"
     android:id="@+id/back">
+
+
+    <TableRow>
+        <TextView />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="From"
         android:id="@+id/textView"
-        android:layout_alignParentStart="false"
-        android:layout_alignParentLeft="false"
-        android:textColor="#eab523"
-        android:textSize="30dp"
-        android:padding="5dp"
-        android:focusable="false"
-        android:textStyle="bold|italic"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"/>
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/editFrom"
-        android:layout_marginLeft="150dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignBottom="@+id/textView"
-        android:hint="Enter Start Postion" />
+        android:textColor="#3f51b5"
+        android:textSize="20dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="5dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        />
+
+        <fragment
+            android:id="@+id/place_autocomplete_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="source"
+            android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+            />
+
+
+        <!--  <EditText
+              android:layout_width="200dp"
+              android:layout_height="wrap_content"
+              android:id="@+id/editFrom"
+              android:textSize="15dp"
+              android:paddingLeft="5dp"
+              android:paddingRight="5dp"
+              android:paddingTop="5dp"
+              android:paddingBottom="5dp"
+              android:hint="Enter Start Postion"
+
+              />
+              -->
+    </TableRow>
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Via"
+            android:id="@+id/textVia1"
+
+            android:textColor="#3f51b5"
+            android:textSize="20dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="5dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editVia1"
+            android:textSize="15dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:hint="Via"
+
+            />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editvia2"
+            android:textSize="15dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:hint="Via "
+
+            />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="To"
         android:id="@+id/textView2"
-        android:layout_below="@+id/textView"
-        android:layout_alignParentStart="false"
-        android:layout_alignParentLeft="false"
-        android:textColor="#eab523"
-        android:textSize="30dp"
-        android:padding="5dp"
-        android:textStyle="bold|italic"
-        android:layout_marginLeft="20dp"/>
+        android:textColor="#3f51b5"
+        android:textSize="20dp"
+
+        android:paddingLeft="20dp"
+        android:paddingRight="5dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editTo"
-        android:layout_below="@+id/editFrom"
-        android:layout_alignStart="@+id/editFrom"
-        android:layout_alignLeft="@+id/editFrom"
-
-        android:layout_alignBottom="@+id/textView2"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp"
+        android:id="@+id/editText"
+        android:textSize="15dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
         android:hint="Enter Destination" />
 
-    <TextView
+    </TableRow>
+    <TableRow>
+        <TextView />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+<LinearLayout>
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Leave After"
-        android:id="@+id/textView3"
-        android:layout_below="@+id/textView2"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginTop="30dp"
-        android:layout_toStartOf="@+id/editText"
-        android:layout_toLeftOf="@+id/editText"
-        android:textColor="#eab523"
-        android:textSize="20dp"
-        android:padding="5dp"
-        android:textStyle="bold" />
-
-    <TextView
+        android:paddingLeft="20dp"
+        android:src="@drawable/date"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/etxt_fromdate"
+            android:hint="Leave Date"
+            android:textColor="#3f51b5"
+            android:textSize="15dp"
+            android:paddingLeft="0dp"
+            android:paddingRight="5dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            />
+</LinearLayout>
+        <LinearLayout>
+            <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="5"
-        android:padding="2dp"
-        android:id="@+id/etxt_todate"
-        android:hint="Leave Time"
-        android:inputType="time"
-        android:editable="false"
-        android:layout_alignTop="@+id/etxt_fromdate"
-        android:layout_alignEnd="@+id/editText5" />
+                android:paddingLeft="20dp"
+        android:src="@drawable/time"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/etxt_todate"
+            android:hint="Leave Time"
+            android:inputType="time"
+            android:textSize="15dp"
+
+            android:paddingRight="5dp"
+            android:textColor="#3f51b5"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            />
+        </LinearLayout>
+
+    </TableRow>
+    <TableRow>
+        <TextView />
+    </TableRow>
 
 
-    <TextView
+    <TableRow
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="5"
-        android:padding="2dp"
-        android:id="@+id/etxt_fromdate"
-        android:hint="Leave Date"
-        android:inputType="date"
-        android:editable="false"
-        android:layout_alignTop="@+id/textView3"
-        android:layout_alignEnd="@+id/osubmit" />
+        android:layout_height="wrap_content">
 
-    <TextView
+   <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Repeat"
         android:id="@+id/Repeat"
-        android:textSize="25dp"
-        android:textStyle="bold|italic"
-        android:textColor="#eab523"
-        android:layout_marginLeft="20dp"
-        android:paddingLeft="5dp"
+        android:textColor="#3f51b5"
+        android:textSize="20dp"
+        android:paddingLeft="20dp"
         android:paddingRight="5dp"
+        android:paddingTop="5dp"
         android:paddingBottom="5dp"
-        android:layout_centerVertical="true"
-        android:layout_alignStart="@+id/textView2" />
+        />
     <RadioGroup
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -123,75 +223,130 @@
             android:layout_height="wrap_content"
             android:text="15 days"
             android:id="@+id/checkBox"
-            android:textStyle="bold|italic"
-            android:layout_alignBottom="@+id/Repeat"
-            android:layout_alignStart="@+id/checkBox2"
-            android:layout_alignLeft="@+id/checkBox2"
-            android:textColor="#eab523"
-            android:textSize="20dp" />
+            android:textColor="#3f51b5"
+            android:textSize="15dp"
+            android:checked="false"
+         />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="1 month"
             android:id="@+id/checkBox2"
-            android:layout_below="@+id/checkBox"
-            android:layout_centerHorizontal="true"
-            android:textStyle="bold|italic"
-            android:textColor="#eab523"
-            android:textSize="20dp"
-            android:checked="true" />
+            android:textColor="#3f51b5"
+            android:textSize="15dp"
+            android:checked="false"
+             />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="2 months"
             android:id="@+id/checkBox3"
-            android:layout_below="@+id/checkBox2"
-            android:layout_alignStart="@+id/checkBox2"
-            android:layout_alignLeft="@+id/checkBox2"
-            android:textStyle="bold|italic"
-            android:textColor="#eab523"
-            android:textSize="20dp" />
-    </RadioGroup>
+            android:textColor="#3f51b5"
+            android:textSize="15dp"
+            android:checked="false"
+            />
 
-    <Button
+
+    </RadioGroup>
+</TableRow>
+    <TableRow
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Submit"
-        android:id="@+id/osubmit"
-        android:background="@drawable/buttonpage"
-        android:textColor="#FFF8E6"
-        android:textSize="20sp"
-        android:padding="20dp"
-        android:paddingTop="40dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"/>
+        android:layout_height="wrap_content">
+
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cost(per person)"
-        android:id="@+id/cost"
-        android:textColor="#eab523"
+        android:text="Cost/Person"
+        android:id="@+id/textView5"
+        android:textColor="#3f51b5"
         android:textSize="20dp"
-        android:padding="5dp"
-        android:textStyle="bold|italic"
-        android:layout_marginLeft="20dp"
-        android:layout_above="@+id/osubmit"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:paddingBottom="10dp" />
+        android:paddingLeft="20dp"
+        android:paddingRight="5dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+
+
+        />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="numberSigned"
-        android:ems="5"
-        android:id="@+id/editText5"
-        android:layout_above="@+id/osubmit"
-        android:layout_toEndOf="@+id/etxt_fromdate"
-        android:layout_toRightOf="@+id/etxt_fromdate"/>
+        android:textSize="15dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
 
-</RelativeLayout>
+        android:hint="Enter Cost/person"
+        android:id="@+id/editText5"
+        />
+</TableRow>
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Comment"
+            android:id="@+id/textView11"
+            android:textColor="#3f51b5"
+            android:textSize="20dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="5dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+
+
+            />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lines="2"
+            android:gravity="top|left"
+            android:inputType="textMultiLine"
+            android:textSize="15dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:hint="Enter detail(if any)"
+            android:id="@+id/editText12"
+            />
+    </TableRow>
+
+    <TableRow>
+<TextView />
+</TableRow>
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+<TextView/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Next"
+            android:id="@+id/button6"
+            android:background="@drawable/buttonpage"
+            android:textColor="#ffffff"
+            android:textSize="15dp"
+            android:paddingLeft="5dp"
+
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+
+            android:onClick="offer_ride" />
+
+
+    </TableRow>
+
+</TableLayout>
+

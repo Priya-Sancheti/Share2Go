@@ -1,5 +1,4 @@
 package com.example.anu.share2go;
-
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
@@ -22,7 +21,7 @@ import java.util.Locale;
 /**
  * Created by Priya on 3/7/2016.
  */
-public class Take_A_Ride extends AppCompatActivity {
+public class c2c_take extends AppCompatActivity {
     private static TextView fromDateEtxt;
     private static TextView fromTimeEtxt;
     private static DatePickerDialog fromDatePickerDialog;
@@ -42,7 +41,7 @@ public class Take_A_Ride extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.take_a_ride);
+        setContentView(R.layout.c2c_take);
         View backgroundimage = findViewById(R.id.back);
         Drawable background = backgroundimage.getBackground();
         background.setAlpha(80);
@@ -220,7 +219,7 @@ public class Take_A_Ride extends AppCompatActivity {
     public void need_ride(View v) {
 
         Intent goToSecond = new Intent();
-        goToSecond.setClass(Take_A_Ride.this, car_detail.class);
+        goToSecond.setClass(c2c_take.this, car_detail.class);
         // pass the rating value to the second activity
         // start the second activity
         startActivity(goToSecond);

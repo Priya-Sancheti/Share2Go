@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@drawable/back2"
+    android:id="@+id/back">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="From"
+        android:id="@+id/textView"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentLeft="false"
+        android:textColor="#eab523"
+        android:textSize="30dp"
+        android:padding="5dp"
+        android:focusable="false"
+        android:textStyle="bold|italic"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editFrom"
+        android:layout_marginLeft="150dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignBottom="@+id/textView"
+        android:hint="Enter Start Postion" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="To"
+        android:id="@+id/textView2"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentLeft="false"
+        android:textColor="#eab523"
+        android:textSize="30dp"
+        android:padding="5dp"
+        android:textStyle="bold|italic"
+        android:layout_marginLeft="20dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTo"
+        android:layout_below="@+id/editFrom"
+        android:layout_alignStart="@+id/editFrom"
+        android:layout_alignLeft="@+id/editFrom"
+
+        android:layout_alignBottom="@+id/textView2"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:hint="Enter Destination" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Leave After"
+        android:id="@+id/textView3"
+        android:layout_below="@+id/textView2"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="30dp"
+        android:layout_toStartOf="@+id/editText"
+        android:layout_toLeftOf="@+id/editText"
+        android:textColor="#eab523"
+        android:textSize="20dp"
+        android:padding="5dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="5"
+        android:padding="2dp"
+        android:id="@+id/etxt_todate"
+        android:hint="Leave Time"
+        android:inputType="time"
+        android:editable="false"
+        android:layout_alignTop="@+id/etxt_fromdate"
+        android:layout_alignEnd="@+id/editText5" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="5"
+        android:padding="2dp"
+        android:id="@+id/etxt_fromdate"
+        android:hint="Leave Date"
+        android:inputType="date"
+        android:editable="false"
+        android:layout_alignTop="@+id/textView3"
+        android:layout_alignEnd="@+id/osubmit" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Repeat"
+        android:id="@+id/Repeat"
+        android:textSize="25dp"
+        android:textStyle="bold|italic"
+        android:textColor="#eab523"
+        android:layout_marginLeft="20dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="5dp"
+        android:layout_centerVertical="true"
+        android:layout_alignStart="@+id/textView2" />
+    <RadioGroup
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/radioGroup"
+        android:layout_alignTop="@+id/Repeat"
+        android:layout_alignStart="@+id/etxt_fromdate">
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="15 days"
+            android:id="@+id/checkBox"
+            android:textStyle="bold|italic"
+            android:layout_alignBottom="@+id/Repeat"
+            android:layout_alignStart="@+id/checkBox2"
+            android:layout_alignLeft="@+id/checkBox2"
+            android:textColor="#eab523"
+            android:textSize="20dp" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1 month"
+            android:id="@+id/checkBox2"
+            android:layout_below="@+id/checkBox"
+            android:layout_centerHorizontal="true"
+            android:textStyle="bold|italic"
+            android:textColor="#eab523"
+            android:textSize="20dp"
+            android:checked="true" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2 months"
+            android:id="@+id/checkBox3"
+            android:layout_below="@+id/checkBox2"
+            android:layout_alignStart="@+id/checkBox2"
+            android:layout_alignLeft="@+id/checkBox2"
+            android:textStyle="bold|italic"
+            android:textColor="#eab523"
+            android:textSize="20dp" />
+    </RadioGroup>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:id="@+id/osubmit"
+        android:background="@drawable/buttonpage"
+        android:textColor="#FFF8E6"
+        android:textSize="20sp"
+        android:padding="20dp"
+        android:paddingTop="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cost(per person)"
+        android:id="@+id/cost"
+        android:textColor="#eab523"
+        android:textSize="20dp"
+        android:padding="5dp"
+        android:textStyle="bold|italic"
+        android:layout_marginLeft="20dp"
+        android:layout_above="@+id/osubmit"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:paddingBottom="10dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberSigned"
+        android:ems="5"
+        android:id="@+id/editText5"
+        android:layout_above="@+id/osubmit"
+        android:layout_toEndOf="@+id/etxt_fromdate"
+        android:layout_toRightOf="@+id/etxt_fromdate"/>
+
+</RelativeLayout>

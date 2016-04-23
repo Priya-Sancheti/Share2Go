@@ -7,142 +7,61 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/back2"
-    android:id="@+id/back">
+    android:id="@+id/back"
+    tools:context="com.example.anu.offer_Ride">
 
 
     <TableRow>
         <TextView />
     </TableRow>
 
-    <TableRow
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
 
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="From"
-        android:id="@+id/textView"
-
-        android:textColor="#3f51b5"
-        android:textSize="20dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="5dp"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        />
-
-        <fragment
-            android:id="@+id/place_autocomplete_fragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="source"
-            android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
-            />
-
-
-        <!--  <EditText
-              android:layout_width="200dp"
-              android:layout_height="wrap_content"
-              android:id="@+id/editFrom"
-              android:textSize="15dp"
-              android:paddingLeft="5dp"
-              android:paddingRight="5dp"
-              android:paddingTop="5dp"
-              android:paddingBottom="5dp"
-              android:hint="Enter Start Postion"
-
-              />
-              -->
-    </TableRow>
-
-    <TableRow
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Via"
-            android:id="@+id/textVia1"
-
-            android:textColor="#3f51b5"
-            android:textSize="20dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="5dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/editVia1"
-            android:textSize="15dp"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:hint="Via"
-
-            />
-    </TableRow>
-
-    <TableRow
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-
-        <TextView
-            />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/editvia2"
-            android:textSize="15dp"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:hint="Via "
-
-            />
-    </TableRow>
-
-    <TableRow
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="To"
-        android:id="@+id/textView2"
-        android:textColor="#3f51b5"
-        android:textSize="20dp"
-
-        android:paddingLeft="20dp"
-        android:paddingRight="5dp"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        />
-
-    <EditText
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/editText"
-        android:textSize="15dp"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
-        android:hint="Enter Destination" />
+        >
+        <fragment
+            android:id="@+id/place_autocomplete_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:name="com.example.anu.share2go.CustomPlaceAutoCompleteFragment"
+            />
+        <fragment
+            android:id="@+id/place_autocomplete_fragment1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Via 1"
+            android:name="com.example.anu.share2go.CustomPlaceAutoCompleteFragment1"
+            />
 
-    </TableRow>
+
+
+        <fragment
+            android:id="@+id/place_autocomplete_fragment2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Via2"
+            android:name="com.example.anu.share2go.CustomPlaceAutoCompleteFragment1"
+            />
+
+
+
+
+        <fragment
+            android:id="@+id/place_autocomplete_fragment3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="destination"
+            android:name="com.example.anu.share2go.CustomPlaceAutoCompleteFragment2"
+            />
+
+
+</LinearLayout>
+
     <TableRow>
         <TextView />
     </TableRow>
@@ -251,102 +170,62 @@
 
     </RadioGroup>
 </TableRow>
-    <TableRow
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Cost/Person"
-        android:id="@+id/textView5"
-        android:textColor="#3f51b5"
-        android:textSize="20dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="5dp"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-
-
-        />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="numberSigned"
-        android:textSize="15dp"
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
+        >
 
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="numberSigned"
+        android:textSize="15dp"
+        android:singleLine="true"
         android:hint="Enter Cost/person"
         android:id="@+id/editText5"
         />
-</TableRow>
-    <TableRow
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Comment"
-            android:id="@+id/textView11"
-            android:textColor="#3f51b5"
-            android:textSize="20dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="5dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-
-
-            />
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:lines="2"
             android:gravity="top|left"
             android:inputType="textMultiLine"
             android:textSize="15dp"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
             android:hint="Enter detail(if any)"
             android:id="@+id/editText12"
             />
-    </TableRow>
+    </LinearLayout>
 
     <TableRow>
 <TextView />
 </TableRow>
 
-    <TableRow
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-<TextView/>
+   <LinearLayout
+       android:orientation="vertical"
+       android:layout_width="match_parent"
+       android:paddingLeft="5dp"
+       android:paddingRight="5dp"
+       android:paddingTop="5dp"
+       android:paddingBottom="5dp"
+       >
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Next"
             android:id="@+id/button6"
             android:background="@drawable/buttonpage"
             android:textColor="#ffffff"
             android:textSize="15dp"
-            android:paddingLeft="5dp"
-
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-
             android:onClick="offer_ride" />
 
 
-    </TableRow>
+   </LinearLayout>
 
 </TableLayout>
 

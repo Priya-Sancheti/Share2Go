@@ -36,5 +36,6 @@
         android:layout_marginTop="69dp"
         android:textColor="#FFF8E6"
         android:textSize="30sp"
-        android:background="@drawable/buttonshape"/>
+        android:background="@drawable/buttonshape"
+        android:onClick="c2c"/>
 </RelativeLayout>

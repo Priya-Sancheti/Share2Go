@@ -28,4 +28,16 @@ public class select_Ride extends AppCompatActivity {
         startActivity(goToSecond);
 
     }
+    public void c2c(View v)
+    {
+
+        Toast.makeText(getApplicationContext(), "Cab Share Clicked", Toast.LENGTH_SHORT).show();
+        Intent goToSecond = new Intent();
+        goToSecond.setClass(select_Ride.this, City2City.class);
+        // pass the rating value to the second activity
+        // start the second activity
+        startActivity(goToSecond);
+
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.example.anu.share2go;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -23,7 +24,7 @@ public class login_page extends AppCompatActivity {
     com.example.anu.share2go.JSONParser jsonParser=new com.example.anu.share2go.JSONParser();
     EditText email=null;
     EditText pass=null;
-    private static String url_create_product = "http://172.16.93.38:8084/WebApplication2/login.jsp";
+    private static String url_create_product = "http://172.16.92.8:9090/WebApplication2/login.jsp";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +87,10 @@ public class login_page extends AppCompatActivity {
                 s= json.getString("result");
                 Log.d("Msg", json.getString("result"));
                 if(s.equals("success")){
+                    SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = pref.edit();
+                    editor.putString("id",json.getString("user_id"));
+                    editor.commit();
                     Intent login = new Intent(login_page.this,select_Ride.class);
                     startActivity(login);
                     finish();

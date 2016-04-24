@@ -144,7 +144,7 @@
             android:id="@+id/checkBox"
             android:textColor="#3f51b5"
             android:textSize="15dp"
-            android:checked="false"
+            android:checked="true"
          />
 
         <RadioButton

@@ -4,14 +4,18 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -21,19 +25,34 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 /**
  * Created by Priya on 3/7/2016.
  */
 public class c2c_offer extends AppCompatActivity {
+    com.example.anu.share2go.JSONParser jsonParser=new com.example.anu.share2go.JSONParser();
+    private static String url_create_product = "http://172.16.92.8:9090/WebApplication2/c2c_offer.jsp";
     private static TextView fromDateEtxt;
     private static TextView fromTimeEtxt;
     private static DatePickerDialog fromDatePickerDialog;
     static SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
+    private static EditText cost;
+    private static EditText comment;
+    String from;
+    String to;
+    String via1;
+    String via2;
+    String userid=null;
     static Date currentDate;
     static Date selectedDate;
     static int syear;
@@ -44,7 +63,7 @@ public class c2c_offer extends AppCompatActivity {
     static Calendar newCalendar;
     static Calendar newDate;
     private SimpleDateFormat dateFormatter;
-String TAG="";
+    String TAG="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,12 +78,14 @@ String TAG="";
             @Override
             public void onPlaceSelected(Place place) {
                 // TODO: Get info about the selected place.
+                from = place.getName().toString();
                 Log.i(TAG, "Place: " + place.getName());//get place details here
             }
 
             @Override
             public void onError(Status status) {
                 // TODO: Handle the error.
+
                 Log.i(TAG, "An error occurred: " + status);
             }
         });
@@ -74,6 +95,7 @@ String TAG="";
             @Override
             public void onPlaceSelected(Place place) {
                 // TODO: Get info about the selected place.
+                via1 = place.getName().toString();
                 Log.i(TAG, "Place: " + place.getName());//get place details here
             }
 
@@ -89,6 +111,7 @@ String TAG="";
             @Override
             public void onPlaceSelected(Place place) {
                 // TODO: Get info about the selected place.
+                via2 = place.getName().toString();
                 Log.i(TAG, "Place: " + place.getName());//get place details here
             }
 
@@ -104,6 +127,7 @@ String TAG="";
             @Override
             public void onPlaceSelected(Place place) {
                 // TODO: Get info about the selected place.
+                to = place.getName().toString();
                 Log.i(TAG, "Place: " + place.getName());//get place details here
             }
 
@@ -136,7 +160,75 @@ String TAG="";
             }
         });
 
+        cost=(EditText)findViewById(R.id.editText5);
+        comment=(EditText)findViewById(R.id.editText12);
+        Button submit = (Button)findViewById(R.id.button6);
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences prefs = getSharedPreferences("MyPref",MODE_PRIVATE);
+                userid = prefs.getString("id","0");
+                Log.d("date", fromDateEtxt.getText().toString());
+                Log.d("time", fromTimeEtxt.getText().toString());
+                Log.d("cost", cost.getText().toString());
+                Log.d("comment", comment.getText().toString());
+                Log.d("session", userid);
+                new CreateNewProduct().execute();
+            }
+
+        });
+
     }
+
+
+    class CreateNewProduct extends AsyncTask<String, String, String> {
+
+
+        protected String doInBackground(String... args) {
+            String fromdate=fromDateEtxt.getText().toString();
+            String fromtime= fromTimeEtxt.getText().toString();
+            String cost1 = cost.getText().toString();
+            String comments = comment.getText().toString();
+
+            // Building Parameters
+            List<NameValuePair> params = new ArrayList<NameValuePair>();
+            params.add(new BasicNameValuePair("from", from));
+            params.add(new BasicNameValuePair("via1", via1));
+            params.add(new BasicNameValuePair("via2", via2));
+            params.add(new BasicNameValuePair("to", to));
+            params.add(new BasicNameValuePair("date",fromdate));
+            params.add(new BasicNameValuePair("time", fromtime));
+            params.add(new BasicNameValuePair("cost", cost1));
+            params.add(new BasicNameValuePair("comment", comments));
+            params.add(new BasicNameValuePair("session",userid));
+
+            JSONObject json = jsonParser.makeHttpRequest(url_create_product, "GET", params);
+
+            String s=null;
+
+            try {
+                s= json.getString("result");
+                Log.d("Msg", json.getString("result"));
+                if(s.equals("success")){
+                    Intent login = new Intent(c2c_offer.this,car_detail.class);
+                    startActivity(login);
+                    finish();
+                }
+                else{
+                    Intent intent = getIntent();
+                    finish();
+                    startActivity(intent);
+                }
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+    }
+
+
 
     private void findViewsById() {
         fromDateEtxt = (TextView) findViewById(R.id.etxt_fromdate);

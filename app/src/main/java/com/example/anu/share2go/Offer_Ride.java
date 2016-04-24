@@ -4,14 +4,20 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -21,17 +27,29 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 /**
  * Created by Priya on 3/7/2016.
  */
 public class Offer_Ride extends AppCompatActivity {
+    com.example.anu.share2go.JSONParser jsonParser=new com.example.anu.share2go.JSONParser();
+    private static String url_create_product = "http://172.16.92.8:9090/WebApplication2/offer_ride.jsp";
     private static TextView fromDateEtxt;
     private static TextView fromTimeEtxt;
+    private static EditText cost;
+    private static EditText comment;
+    private static RadioGroup duration=null;
+    private static RadioButton dur=null;
     private static DatePickerDialog fromDatePickerDialog;
     static SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
     static Date currentDate;
@@ -44,14 +62,24 @@ public class Offer_Ride extends AppCompatActivity {
     static Calendar newCalendar;
     static Calendar newDate;
     private SimpleDateFormat dateFormatter;
+    String from;
+    String to;
+    String via1;
+    String via2;
+    String fromdate;
+    String fromtime;
+    String durationstr;
+    String cost1 ;
+    String comments ;
 
     String TAG ="" ;
+    String userid=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.offer_a_ride);
-       View backgroundimage = findViewById(R.id.back);
+        View backgroundimage = findViewById(R.id.back);
         Drawable background = backgroundimage.getBackground();
         background.setAlpha(100);
         PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
@@ -60,7 +88,8 @@ public class Offer_Ride extends AppCompatActivity {
             @Override
             public void onPlaceSelected(Place place) {
                 // TODO: Get info about the selected place.
-                Log.i(TAG, "Place: " + place.getName());//get place details here
+                from = place.getName().toString();
+                Log.d("source: ", place.getName().toString());//get place details here
             }
 
             @Override
@@ -69,7 +98,56 @@ public class Offer_Ride extends AppCompatActivity {
                 Log.i(TAG, "An error occurred: " + status);
             }
         });
+        PlaceAutocompleteFragment autocompleteFragment1 = (PlaceAutocompleteFragment)
+                getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment1);
+        autocompleteFragment1.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                // TODO: Get info about the selected place.
+                via1=place.getName().toString();
+                Log.d("via1: ",place.getName().toString());//get place details here
+            }
 
+            @Override
+            public void onError(Status status) {
+                // TODO: Handle the error.
+                Log.i(TAG, "An error occurred: " + status);
+            }
+        });
+        PlaceAutocompleteFragment autocompleteFragment2 = (PlaceAutocompleteFragment)
+                getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment2);
+        autocompleteFragment2.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                // TODO: Get info about the selected place.
+                via2=place.getName().toString();
+                Log.d("via2: ", place.getName().toString());//get place details here
+            }
+
+            @Override
+            public void onError(Status status) {
+                // TODO: Handle the error.
+                Log.i(TAG, "An error occurred: " + status);
+            }
+        });
+        PlaceAutocompleteFragment autocompleteFragment3 = (PlaceAutocompleteFragment)
+                getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment3);
+        autocompleteFragment3.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                // TODO: Get info about the selected place.
+                to=place.getName().toString();
+                Log.d("destination ", place.getName().toString());//get place details here
+            }
+
+            @Override
+            public void onError(Status status) {
+                // TODO: Handle the error.
+                Log.i(TAG, "An error occurred: " + status);
+            }
+        });
+        SharedPreferences prefs = getSharedPreferences("MyPref",MODE_PRIVATE);
+        userid = prefs.getString("id","0");
 
         setCurrentDate();
 
@@ -90,8 +168,105 @@ public class Offer_Ride extends AppCompatActivity {
                 showTruitonTimePickerDialog(v);
             }
         });
+//        via1=(EditText)findViewById(R.id.editVia1);
+//        via2=(EditText)findViewById(R.id.editvia2);
+//        destination=(EditText)findViewById(R.id.editText);
+        cost=(EditText)findViewById(R.id.editText5);
+        comment=(EditText)findViewById(R.id.editText12);
+        Button submit = (Button)findViewById(R.id.button6);
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                duration=(RadioGroup)findViewById(R.id.radioGroup);
+                int rid= duration.getCheckedRadioButtonId();
+                dur=(RadioButton)findViewById(rid);
+
+                fromdate=fromDateEtxt.getText().toString();
+                 fromtime= fromTimeEtxt.getText().toString();
+                 durationstr= dur.getText().toString();
+                 cost1 = cost.getText().toString();
+                 comments = comment.getText().toString();
+                if(!fromdate.equals("") && !fromtime.equals("") && !to.equals("")
+                        && !from.equals("") && !via1.equals("") && !via2.equals("") && !cost.equals("") &&!durationstr.equals(" ")) {
+
+//                Log.d("via1", via1.getText().toString());
+//                Log.d("via2", via2.getText().toString());
+//                Log.d("dest", destination.getText().toString());
+                    Log.d("date", fromDateEtxt.getText().toString());
+                    Log.d("time", fromTimeEtxt.getText().toString());
+                    Log.d("duration", dur.getText().toString());
+                    Log.d("cost", cost.getText().toString());
+                    Log.d("comment", comment.getText().toString());
+                    Log.d("session", userid);
+                    new CreateNewProduct().execute();
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "fill all the details", Toast.LENGTH_SHORT).show();
+
+                    Intent intent = getIntent();
+                        finish();
+                        startActivity(intent);
+
+                }
+            }
+        });
 
     }
+
+    class CreateNewProduct extends AsyncTask<String, String, String> {
+
+        /**
+         * Before starting background thread Show Progress Dialog
+         * */
+
+
+        /**
+         * Creating product
+         * */
+
+        protected String doInBackground(String... args) {
+
+            // Building Parameters
+            List<NameValuePair> params = new ArrayList<NameValuePair>();
+            params.add(new BasicNameValuePair("from", from));
+            params.add(new BasicNameValuePair("via1", via1));
+            params.add(new BasicNameValuePair("via2", via2));
+            params.add(new BasicNameValuePair("to", to));
+            params.add(new BasicNameValuePair("date",fromdate));
+            params.add(new BasicNameValuePair("time", fromtime));
+            params.add(new BasicNameValuePair("duration", durationstr));
+            params.add(new BasicNameValuePair("cost", cost1));
+            params.add(new BasicNameValuePair("comment", comments));
+            params.add(new BasicNameValuePair("session", userid));
+
+            JSONObject json = jsonParser.makeHttpRequest(url_create_product, "GET", params);
+
+            String s=null;
+
+            try {
+                s= json.getString("result");
+                Log.d("Msg", json.getString("result"));
+                if(s.equals("success")){
+                    Intent login = new Intent(Offer_Ride.this,car_detail.class);
+                    startActivity(login);
+                    finish();
+                }
+                else{
+                    Intent intent = getIntent();
+                    finish();
+                    startActivity(intent);
+                }
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+    }
+
+
+
 
     private void findViewsById() {
         fromDateEtxt = (TextView) findViewById(R.id.etxt_fromdate);
@@ -208,7 +383,7 @@ public class Offer_Ride extends AppCompatActivity {
                 //fromTimeEtxt.setText(hour + ":" + smin+am_pm);
                 fromTimeEtxt.setText(dateFormat.format(currentDate));
             } else
-               // fromTimeEtxt.setText(hour + ":" + minute+am_pm );
+                // fromTimeEtxt.setText(hour + ":" + minute+am_pm );
                 fromTimeEtxt.setText(dateFormat.format(selectedDate));
         }
 
@@ -237,24 +412,7 @@ public class Offer_Ride extends AppCompatActivity {
     private static void setselectedDate() {
         selectedDate = new Date(syear, smonth, sday, shour, smin);
     }
-    public void offer_ride(View v)
-    {
 
-        Toast.makeText(getApplicationContext(), "Fill car detail", Toast.LENGTH_SHORT).show();
-        Intent goToSecond = new Intent();
-        goToSecond.setClass(Offer_Ride.this, car_detail.class);
-        // pass the rating value to the second activity
-        // start the second activity
-        startActivity(goToSecond);
-
-     /*   FragmentManager fragmentManager = getFragmentManager();
-// Or: FragmentManager fragmentManager = getSupportFragmentManager()
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        car_detail fragment = new car_detail();
-        fragmentTransaction.add(android.R.id.content, fragment);
-        fragmentTransaction.commit();
-        */
-    }
 
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);

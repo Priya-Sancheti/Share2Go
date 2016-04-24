@@ -222,7 +222,7 @@
             android:background="@drawable/buttonpage"
             android:textColor="#ffffff"
             android:textSize="15dp"
-            android:onClick="offer_ride" />
+            />
 
 
    </LinearLayout>

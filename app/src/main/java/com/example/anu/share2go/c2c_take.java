@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
@@ -57,6 +58,9 @@ public class c2c_take extends AppCompatActivity {
     String to;
     String via1;
     String via2;
+    String fromdate;
+    String fromtime;
+
     String userid;
 
         String TAG="";
@@ -73,7 +77,7 @@ public class c2c_take extends AppCompatActivity {
             @Override
             public void onPlaceSelected(Place place) {
                 // TODO: Get info about the selected place.
-                from = place.getName().toString();
+                from = place.getAddress().toString();
                 Log.i(TAG, "Place: " + place.getName());//get place details here
             }
 
@@ -89,7 +93,7 @@ public class c2c_take extends AppCompatActivity {
             @Override
             public void onPlaceSelected(Place place) {
                 // TODO: Get info about the selected place.
-                via1 = place.getName().toString();
+                via1 = place.getAddress().toString();
                 Log.i(TAG, "Place: " + place.getName());//get place details here
             }
 
@@ -105,7 +109,7 @@ public class c2c_take extends AppCompatActivity {
             @Override
             public void onPlaceSelected(Place place) {
                 // TODO: Get info about the selected place.
-                via2 = place.getName().toString();
+                via2 = place.getAddress().toString();
                 Log.i(TAG, "Place: " + place.getName());//get place details here
             }
 
@@ -121,7 +125,7 @@ public class c2c_take extends AppCompatActivity {
             @Override
             public void onPlaceSelected(Place place) {
                 // TODO: Get info about the selected place.
-                to = place.getName().toString();
+                to = place.getAddress().toString();
                 Log.i(TAG, "Place: " + place.getName());//get place details here
             }
 
@@ -161,14 +165,21 @@ public class c2c_take extends AppCompatActivity {
             public void onClick(View v) {
                 SharedPreferences prefs = getSharedPreferences("MyPref",MODE_PRIVATE);
                 userid = prefs.getString("id","0");
+                fromdate=fromDateEtxt.getText().toString();
+                fromtime= fromTimeEtxt.getText().toString();
+
 //                Log.d("via1", via1.getText().toString());
 //                Log.d("via2", via2.getText().toString());
 //                Log.d("dest", destination.getText().toString());
-                Log.d("date", fromDateEtxt.getText().toString());
-                Log.d("time",fromTimeEtxt.getText().toString());
-                Log.d("session", userid);
-                new CreateNewProduct().execute();
-
+                if(!fromdate.equals("")&& !fromtime.equals("")&& !to.equals("") && !from.equals("")) {
+                    Log.d("date", fromDateEtxt.getText().toString());
+                    Log.d("time", fromTimeEtxt.getText().toString());
+                    Log.d("session", userid);
+                    new CreateNewProduct().execute();
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "fill all the details", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -186,8 +197,6 @@ public class c2c_take extends AppCompatActivity {
          * */
 
         protected String doInBackground(String... args) {
-            String fromdate=fromDateEtxt.getText().toString();
-            String fromtime= fromTimeEtxt.getText().toString();
 
 
             // Building Parameters
@@ -208,14 +217,13 @@ public class c2c_take extends AppCompatActivity {
                 s= json.getString("result");
                 Log.d("Msg", json.getString("result"));
                 if(s.equals("success")){
+                    Toast.makeText(getApplicationContext(), "Searching for ride", Toast.LENGTH_SHORT).show();
                     Intent login = new Intent(c2c_take.this,car_detail.class);
                     startActivity(login);
                     finish();
                 }
                 else{
-                    Intent intent = getIntent();
-                    finish();
-                    startActivity(intent);
+                    Toast.makeText(getApplicationContext(), "Error!!", Toast.LENGTH_SHORT).show();
                 }
             } catch (Exception e) {
                 // TODO Auto-generated catch block
@@ -376,16 +384,6 @@ public class c2c_take extends AppCompatActivity {
         selectedDate = new Date(syear, smonth, sday, shour, smin);
     }
 
-    public void need_ride(View v) {
-
-        Intent goToSecond = new Intent();
-        goToSecond.setClass(c2c_take.this, car_detail.class);
-        // pass the rating value to the second activity
-        // start the second activity
-        startActivity(goToSecond);
-
-
-    }
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;

@@ -24,9 +24,6 @@ import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.android.gms.maps.model.LatLngBounds;
 
 
-/**
- * Created by sunny on 22/12/15.
- */
 public class CustomPlaceAutoCompleteFragment1 extends PlaceAutocompleteFragment {
 
     private EditText editSearch;

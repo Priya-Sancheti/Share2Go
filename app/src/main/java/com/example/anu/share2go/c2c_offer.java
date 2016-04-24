@@ -44,6 +44,11 @@ public class c2c_offer extends AppCompatActivity {
     private static String url_create_product = "http://172.16.92.8:9090/WebApplication2/c2c_offer.jsp";
     private static TextView fromDateEtxt;
     private static TextView fromTimeEtxt;
+    String fromdate;
+    String fromtime;
+    String cost1;
+    String comments;
+
     private static DatePickerDialog fromDatePickerDialog;
     static SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
     private static EditText cost;
@@ -78,7 +83,7 @@ public class c2c_offer extends AppCompatActivity {
             @Override
             public void onPlaceSelected(Place place) {
                 // TODO: Get info about the selected place.
-                from = place.getName().toString();
+                from = place.getAddress().toString();
                 Log.i(TAG, "Place: " + place.getName());//get place details here
             }
 
@@ -95,7 +100,7 @@ public class c2c_offer extends AppCompatActivity {
             @Override
             public void onPlaceSelected(Place place) {
                 // TODO: Get info about the selected place.
-                via1 = place.getName().toString();
+                via1 = place.getAddress().toString();
                 Log.i(TAG, "Place: " + place.getName());//get place details here
             }
 
@@ -111,7 +116,7 @@ public class c2c_offer extends AppCompatActivity {
             @Override
             public void onPlaceSelected(Place place) {
                 // TODO: Get info about the selected place.
-                via2 = place.getName().toString();
+                via2 = place.getAddress().toString();
                 Log.i(TAG, "Place: " + place.getName());//get place details here
             }
 
@@ -127,7 +132,7 @@ public class c2c_offer extends AppCompatActivity {
             @Override
             public void onPlaceSelected(Place place) {
                 // TODO: Get info about the selected place.
-                to = place.getName().toString();
+                to = place.getAddress().toString();
                 Log.i(TAG, "Place: " + place.getName());//get place details here
             }
 
@@ -166,29 +171,32 @@ public class c2c_offer extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences prefs = getSharedPreferences("MyPref",MODE_PRIVATE);
-                userid = prefs.getString("id","0");
-                Log.d("date", fromDateEtxt.getText().toString());
-                Log.d("time", fromTimeEtxt.getText().toString());
-                Log.d("cost", cost.getText().toString());
-                Log.d("comment", comment.getText().toString());
-                Log.d("session", userid);
-                new CreateNewProduct().execute();
-            }
+                SharedPreferences prefs = getSharedPreferences("MyPref", MODE_PRIVATE);
+                userid = prefs.getString("id", "0");
+                fromdate = fromDateEtxt.getText().toString();
+                fromtime = fromTimeEtxt.getText().toString();
+                cost1 = cost.getText().toString();
+                comments = comment.getText().toString();
+                if (!fromdate.equals("") && !fromtime.equals("") && !from.equals("") && !to.equals("") && cost.equals("")) {
+                    Log.d("date", fromDateEtxt.getText().toString());
+                    Log.d("time", fromTimeEtxt.getText().toString());
+                    Log.d("cost", cost.getText().toString());
+                    Log.d("comment", comment.getText().toString());
+                    Log.d("session", userid);
+                    new CreateNewProduct().execute();
+                } else {
+                    Toast.makeText(getApplicationContext(), "fill all the details", Toast.LENGTH_SHORT).show();
 
+                }
+            }
         });
 
     }
-
 
     class CreateNewProduct extends AsyncTask<String, String, String> {
 
 
         protected String doInBackground(String... args) {
-            String fromdate=fromDateEtxt.getText().toString();
-            String fromtime= fromTimeEtxt.getText().toString();
-            String cost1 = cost.getText().toString();
-            String comments = comment.getText().toString();
 
             // Building Parameters
             List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -210,14 +218,13 @@ public class c2c_offer extends AppCompatActivity {
                 s= json.getString("result");
                 Log.d("Msg", json.getString("result"));
                 if(s.equals("success")){
-                    Intent login = new Intent(c2c_offer.this,car_detail.class);
+                    Toast.makeText(getApplicationContext(), "Successfully Registered", Toast.LENGTH_SHORT).show();
+                    Intent login = new Intent(c2c_offer.this,CarPooling.class);
                     startActivity(login);
                     finish();
                 }
                 else{
-                    Intent intent = getIntent();
-                    finish();
-                    startActivity(intent);
+                    Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
                 }
             } catch (Exception e) {
                 // TODO Auto-generated catch block
@@ -373,24 +380,6 @@ public class c2c_offer extends AppCompatActivity {
 
     private static void setselectedDate() {
         selectedDate = new Date(syear, smonth, sday, shour, smin);
-    }
-    public void offer_ride(View v)
-    {
-
-        Toast.makeText(getApplicationContext(), "Fill car detail", Toast.LENGTH_SHORT).show();
-        Intent goToSecond = new Intent();
-        goToSecond.setClass(c2c_offer.this, car_detail.class);
-        // pass the rating value to the second activity
-        // start the second activity
-        startActivity(goToSecond);
-
-     /*   FragmentManager fragmentManager = getFragmentManager();
-// Or: FragmentManager fragmentManager = getSupportFragmentManager()
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        car_detail fragment = new car_detail();
-        fragmentTransaction.add(android.R.id.content, fragment);
-        fragmentTransaction.commit();
-        */
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {

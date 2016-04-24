@@ -24,7 +24,7 @@ public class CarPooling extends AppCompatActivity {
     {
         Toast.makeText(getApplicationContext(), "Offer Ride Clicked", Toast.LENGTH_LONG).show();
         Intent goToSecond = new Intent();
-        goToSecond.setClass(CarPooling.this, Offer_Ride.class);
+        goToSecond.setClass(CarPooling.this, car_detail.class);
         // pass the rating value to the second activity
         // start the second activity
         startActivity(goToSecond);

@@ -88,7 +88,7 @@ public class Offer_Ride extends AppCompatActivity {
             @Override
             public void onPlaceSelected(Place place) {
                 // TODO: Get info about the selected place.
-                from = place.getName().toString();
+                from = place.getAddress().toString();
                 Log.d("source: ", place.getName().toString());//get place details here
             }
 
@@ -104,7 +104,7 @@ public class Offer_Ride extends AppCompatActivity {
             @Override
             public void onPlaceSelected(Place place) {
                 // TODO: Get info about the selected place.
-                via1=place.getName().toString();
+                via1=place.getAddress().toString();
                 Log.d("via1: ",place.getName().toString());//get place details here
             }
 
@@ -120,7 +120,7 @@ public class Offer_Ride extends AppCompatActivity {
             @Override
             public void onPlaceSelected(Place place) {
                 // TODO: Get info about the selected place.
-                via2=place.getName().toString();
+                via2=place.getAddress().toString();
                 Log.d("via2: ", place.getName().toString());//get place details here
             }
 
@@ -136,7 +136,7 @@ public class Offer_Ride extends AppCompatActivity {
             @Override
             public void onPlaceSelected(Place place) {
                 // TODO: Get info about the selected place.
-                to=place.getName().toString();
+                to=place.getAddress().toString();
                 Log.d("destination ", place.getName().toString());//get place details here
             }
 
@@ -186,8 +186,7 @@ public class Offer_Ride extends AppCompatActivity {
                  durationstr= dur.getText().toString();
                  cost1 = cost.getText().toString();
                  comments = comment.getText().toString();
-                if(!fromdate.equals("") && !fromtime.equals("") && !to.equals("")
-                        && !from.equals("") && !via1.equals("") && !via2.equals("") && !cost.equals("") &&!durationstr.equals(" ")) {
+                if(!fromdate.equals("") && !fromtime.equals("") && !to.equals("") && !from.equals("")  && !cost.equals("") &&!durationstr.equals(" ")) {
 
 //                Log.d("via1", via1.getText().toString());
 //                Log.d("via2", via2.getText().toString());
@@ -203,9 +202,6 @@ public class Offer_Ride extends AppCompatActivity {
                 else {
                     Toast.makeText(getApplicationContext(), "fill all the details", Toast.LENGTH_SHORT).show();
 
-                    Intent intent = getIntent();
-                        finish();
-                        startActivity(intent);
 
                 }
             }
@@ -247,15 +243,16 @@ public class Offer_Ride extends AppCompatActivity {
                 s= json.getString("result");
                 Log.d("Msg", json.getString("result"));
                 if(s.equals("success")){
-                    Intent login = new Intent(Offer_Ride.this,car_detail.class);
+                    Toast.makeText(getApplicationContext(), "Successfully Registered", Toast.LENGTH_SHORT).show();
+
+                    Intent login = new Intent(Offer_Ride.this,CarPooling.class);
                     startActivity(login);
                     finish();
                 }
                 else{
-                    Intent intent = getIntent();
-                    finish();
-                    startActivity(intent);
-                }
+                    Toast.makeText(getApplicationContext(), "Error!!!", Toast.LENGTH_SHORT).show();
+
+                    }
             } catch (Exception e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -318,7 +315,6 @@ public class Offer_Ride extends AppCompatActivity {
                     am_pm = "AM";
                 }
 
-                //fromTimeEtxt.setText(hour + ":" + smin+am_pm);
                 fromTimeEtxt.setText(dateFormat.format(currentDate));
             }
 

@@ -200,7 +200,7 @@
             android:background="@drawable/buttonpage"
             android:textColor="#ffffff"
             android:textSize="15dp"
-            android:onClick="need_ride" />
+             />
 
 
     </LinearLayout>

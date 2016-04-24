@@ -19,6 +19,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
@@ -61,6 +62,10 @@ public class Take_A_Ride extends AppCompatActivity {
     String via1;
     String via2;
     String userid;
+    String fromdate;
+    String fromtime;
+    String durationstr;
+
     private static RadioGroup duration=null;
     private static RadioButton dur=null;
 String TAG="";
@@ -79,7 +84,7 @@ String TAG="";
             @Override
             public void onPlaceSelected(Place place) {
                 // TODO: Get info about the selected place.
-                from = place.getName().toString();
+                from = place.getAddress().toString();
                 Log.i(TAG, "Place: " + place.getName());//get place details here
             }
 
@@ -95,7 +100,7 @@ String TAG="";
             @Override
             public void onPlaceSelected(Place place) {
                 // TODO: Get info about the selected place.
-                via1 = place.getName().toString();
+                via1 = place.getAddress().toString();
                 Log.i(TAG, "Place: " + place.getName());//get place details here
             }
 
@@ -111,7 +116,7 @@ String TAG="";
             @Override
             public void onPlaceSelected(Place place) {
                 // TODO: Get info about the selected place.
-                via2 = place.getName().toString();
+                via2 = place.getAddress().toString();
                 Log.i(TAG, "Place: " + place.getName());//get place details here
             }
 
@@ -127,7 +132,7 @@ String TAG="";
             @Override
             public void onPlaceSelected(Place place) {
                 // TODO: Get info about the selected place.
-                to = place.getName().toString();
+                to = place.getAddress().toString();
                 Log.i(TAG, "Place: " + place.getName());//get place details here
             }
 
@@ -165,21 +170,28 @@ String TAG="";
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences prefs = getSharedPreferences("MyPref",MODE_PRIVATE);
+                SharedPreferences prefs = getSharedPreferences("MyPref", MODE_PRIVATE);
                 userid = prefs.getString("id","0");
-//                Log.d("via1", via1.getText().toString());
-//                Log.d("via2", via2.getText().toString());
-//                Log.d("dest", destination.getText().toString());
-                Log.d("date", fromDateEtxt.getText().toString());
-                Log.d("time",fromTimeEtxt.getText().toString());
                 duration=(RadioGroup)findViewById(R.id.radioGroup);
                 int rid= duration.getCheckedRadioButtonId();
                 dur=(RadioButton)findViewById(rid);
-                Log.d("duration", dur.getText().toString());
+                 fromdate=fromDateEtxt.getText().toString();
+                 fromtime= fromTimeEtxt.getText().toString();
+                 durationstr= dur.getText().toString();
+                if(!fromdate.equals("") && !fromtime.equals("") && !to.equals("")
+                        && !from.equals("")  && !durationstr.equals(" ")) {
 
-                Log.d("session", userid);
-                new CreateNewProduct().execute();
+                    Log.d("date", fromDateEtxt.getText().toString());
+                    Log.d("time", fromTimeEtxt.getText().toString());
+                    Log.d("duration", dur.getText().toString());
 
+                    Log.d("session", userid);
+                    new CreateNewProduct().execute();
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(), "fill all the details", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -197,9 +209,6 @@ String TAG="";
          * */
 
         protected String doInBackground(String... args) {
-            String fromdate=fromDateEtxt.getText().toString();
-            String fromtime= fromTimeEtxt.getText().toString();
-            String duration= dur.getText().toString();
 
             // Building Parameters
             List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -209,9 +218,9 @@ String TAG="";
             params.add(new BasicNameValuePair("to", to));
             params.add(new BasicNameValuePair("date",fromdate));
             params.add(new BasicNameValuePair("time", fromtime));
-            params.add(new BasicNameValuePair("duration", duration));
+            params.add(new BasicNameValuePair("duration", durationstr));
 
-            params.add(new BasicNameValuePair("session",userid));
+            params.add(new BasicNameValuePair("session", userid));
 
             JSONObject json = jsonParser.makeHttpRequest(url_create_product, "GET", params);
 
@@ -221,14 +230,14 @@ String TAG="";
                 s= json.getString("result");
                 Log.d("Msg", json.getString("result"));
                 if(s.equals("success")){
-                    Intent login = new Intent(Take_A_Ride.this,car_detail.class);
+                    Toast.makeText(getApplicationContext(), "Searching for Ride", Toast.LENGTH_SHORT).show();
+                    Intent login = new Intent(Take_A_Ride.this,CarPooling.class);
                     startActivity(login);
                     finish();
                 }
                 else{
-                    Intent intent = getIntent();
-                    finish();
-                    startActivity(intent);
+                    Toast.makeText(getApplicationContext(), "Error!!", Toast.LENGTH_SHORT).show();
+
                 }
             } catch (Exception e) {
                 // TODO Auto-generated catch block
@@ -389,16 +398,6 @@ String TAG="";
         selectedDate = new Date(syear, smonth, sday, shour, smin);
     }
 
-    public void need_ride(View v) {
-
-        Intent goToSecond = new Intent();
-        goToSecond.setClass(Take_A_Ride.this, car_detail.class);
-        // pass the rating value to the second activity
-        // start the second activity
-        startActivity(goToSecond);
-
-
-    }
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;

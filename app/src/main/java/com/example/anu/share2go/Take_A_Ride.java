@@ -42,7 +42,7 @@ import java.util.Locale;
  */
 public class Take_A_Ride extends AppCompatActivity {
     com.example.anu.share2go.JSONParser jsonParser=new com.example.anu.share2go.JSONParser();
-    private static String url_create_product = "http://172.16.92.8:9090/WebApplication2/take_a_ride.jsp";
+    private static String url_create_product = "http://172.16.93.38:8084/WebApplication2/take_a_ride.jsp";
     private static TextView fromDateEtxt;
     private static TextView fromTimeEtxt;
     private static DatePickerDialog fromDatePickerDialog;
@@ -85,38 +85,6 @@ String TAG="";
             public void onPlaceSelected(Place place) {
                 // TODO: Get info about the selected place.
                 from = place.getAddress().toString();
-                Log.i(TAG, "Place: " + place.getName());//get place details here
-            }
-
-            @Override
-            public void onError(Status status) {
-                // TODO: Handle the error.
-                Log.i(TAG, "An error occurred: " + status);
-            }
-        });
-        PlaceAutocompleteFragment autocompleteFragment1 = (PlaceAutocompleteFragment)
-                getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment1);
-        autocompleteFragment1.setOnPlaceSelectedListener(new PlaceSelectionListener() {
-            @Override
-            public void onPlaceSelected(Place place) {
-                // TODO: Get info about the selected place.
-                via1 = place.getAddress().toString();
-                Log.i(TAG, "Place: " + place.getName());//get place details here
-            }
-
-            @Override
-            public void onError(Status status) {
-                // TODO: Handle the error.
-                Log.i(TAG, "An error occurred: " + status);
-            }
-        });
-        PlaceAutocompleteFragment autocompleteFragment2 = (PlaceAutocompleteFragment)
-                getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment2);
-        autocompleteFragment2.setOnPlaceSelectedListener(new PlaceSelectionListener() {
-            @Override
-            public void onPlaceSelected(Place place) {
-                // TODO: Get info about the selected place.
-                via2 = place.getAddress().toString();
                 Log.i(TAG, "Place: " + place.getName());//get place details here
             }
 
@@ -213,8 +181,8 @@ String TAG="";
             // Building Parameters
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             params.add(new BasicNameValuePair("from", from));
-           // params.add(new BasicNameValuePair("via1", via1));
-            //params.add(new BasicNameValuePair("via2", via2));
+            params.add(new BasicNameValuePair("via1", via1));
+            params.add(new BasicNameValuePair("via2", via2));
             params.add(new BasicNameValuePair("to", to));
             params.add(new BasicNameValuePair("date",fromdate));
             params.add(new BasicNameValuePair("time", fromtime));
@@ -225,18 +193,18 @@ String TAG="";
             JSONObject json = jsonParser.makeHttpRequest(url_create_product, "GET", params);
 
             String s=null;
-
+            String msg="";
             try {
                 s= json.getString("result");
                 Log.d("Msg", json.getString("result"));
                 if(s.equals("success")){
-                    //Toast.makeText(getApplicationContext(), "Searching for Ride", Toast.LENGTH_SHORT).show();
+                    msg= "Searching for Ride";
                     Intent login = new Intent(Take_A_Ride.this,CarPooling.class);
                     startActivity(login);
                     finish();
                 }
                 else{
-                    //Toast.makeText(getApplicationContext(), "Error!!", Toast.LENGTH_SHORT).show();
+                    msg="Error!!";
 
                 }
             } catch (Exception e) {
@@ -244,9 +212,16 @@ String TAG="";
                 e.printStackTrace();
             }
 
-            return null;
+            return msg;
         }
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
+        }
+
     }
+
 
 
 

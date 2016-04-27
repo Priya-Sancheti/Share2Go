@@ -43,7 +43,7 @@ import java.util.Locale;
  */
 public class Offer_Ride extends AppCompatActivity {
     com.example.anu.share2go.JSONParser jsonParser=new com.example.anu.share2go.JSONParser();
-    private static String url_create_product = "http://172.16.92.8:9090/WebApplication2/offer_ride.jsp";
+    private static String url_create_product = "http://172.16.93.38:8084/WebApplication2/offer_ride.jsp";
     private static TextView fromDateEtxt;
     private static TextView fromTimeEtxt;
     private static EditText cost;
@@ -146,7 +146,8 @@ public class Offer_Ride extends AppCompatActivity {
                 Log.i(TAG, "An error occurred: " + status);
             }
         });
-
+        SharedPreferences prefs = getSharedPreferences("MyPref",MODE_PRIVATE);
+        userid = prefs.getString("id","0");
 
         setCurrentDate();
 
@@ -176,8 +177,6 @@ public class Offer_Ride extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences prefs = getSharedPreferences("MyPref",MODE_PRIVATE);
-                userid = prefs.getString("id","0");
                 duration=(RadioGroup)findViewById(R.id.radioGroup);
                 int rid= duration.getCheckedRadioButtonId();
                 dur=(RadioButton)findViewById(rid);
@@ -244,14 +243,30 @@ public class Offer_Ride extends AppCompatActivity {
                 s= json.getString("result");
                 Log.d("Msg", json.getString("result"));
                 if(s.equals("success")){
-                    //Toast.makeText(getApplicationContext(), "Successfully Registered", Toast.LENGTH_SHORT).show();
+                    runOnUiThread(new Runnable() {
+
+                        public void run() {
+
+                            Toast.makeText(getApplicationContext(), "Successfully Registered", Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
+
 
                     Intent login = new Intent(Offer_Ride.this,CarPooling.class);
                     startActivity(login);
                     finish();
                 }
                 else{
-                    //Toast.makeText(getApplicationContext(), "Error!!!", Toast.LENGTH_SHORT).show();
+                    runOnUiThread(new Runnable() {
+
+                        public void run() {
+
+                            Toast.makeText(getApplicationContext(), "Error!!!", Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
+
 
                     }
             } catch (Exception e) {

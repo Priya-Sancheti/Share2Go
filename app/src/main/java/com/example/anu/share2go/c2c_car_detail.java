@@ -27,9 +27,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class car_detail extends AppCompatActivity {
+public class c2c_car_detail extends AppCompatActivity {
     com.example.anu.share2go.JSONParser jsonParser=new com.example.anu.share2go.JSONParser();
-    private static String url_create_product = "http://172.16.93.38:8084/WebApplication2/car.jsp";
+    private static String url_create_product = "http://172.16.93.19:8084/WebApplication2/c2c_car.jsp";
     EditText model;
     EditText color;
     EditText car_number;
@@ -109,51 +109,34 @@ public class car_detail extends AppCompatActivity {
             JSONObject json = jsonParser.makeHttpRequest(url_create_product, "GET", params);
 
             String s=null;
+            String msg="";
 
             try {
                 s= json.getString("result");
                 Log.d("Msg", json.getString("result"));
                 if(s.equals("success")){
-                    Intent login = new Intent(car_detail.this,Offer_Ride.class);
+                    Intent login = new Intent(c2c_car_detail.this,c2c_offer.class);
                     startActivity(login);
-                    runOnUiThread(new Runnable() {
-
-                        public void run() {
-
-                            Toast.makeText(getBaseContext(), "car registration successful", Toast.LENGTH_SHORT).show();
-
-                        }
-                    });
+                    msg="car registration successful";
 
                     finish();
                 }
                 else{
-                    runOnUiThread(new Runnable() {
-
-                        public void run() {
-
-                            Toast.makeText(getApplicationContext(), "car registration unsuccessful", Toast.LENGTH_SHORT).show();
-
-                        }
-                    });
-                   }
+                    msg="car registration unsuccessful";
+                      }
             } catch (Exception e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
 
-            return null;
+            return msg;
+        }
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
         }
     }
-
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }
-
 
     private boolean validateNumberPlate(String number) {
         String NUMBER_PATTERN = "^[A-Z]{2}[ -][0-9]{1,2}(?: [A-Z])?(?: [A-Z]*)? [0-9]{4}$";
@@ -171,4 +154,10 @@ public class car_detail extends AppCompatActivity {
         return matcher.matches();
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
 }

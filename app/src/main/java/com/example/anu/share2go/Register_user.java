@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
 
 public class Register_user extends AppCompatActivity {
     com.example.anu.share2go.JSONParser jsonParser=new com.example.anu.share2go.JSONParser();
-    private static String url_create_product = "http://172.16.92.8:9090/WebApplication2/register.jsp";
+    private static String url_create_product = "http://172.16.93.38:8084/WebApplication2/register.jsp";
     EditText fullname=null;
     EditText email=null;
     EditText phone=null;

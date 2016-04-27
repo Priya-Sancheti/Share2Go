@@ -41,7 +41,7 @@ import java.util.Locale;
  */
 public class c2c_offer extends AppCompatActivity {
     com.example.anu.share2go.JSONParser jsonParser=new com.example.anu.share2go.JSONParser();
-    private static String url_create_product = "http://172.16.92.8:9090/WebApplication2/c2c_offer.jsp";
+    private static String url_create_product = "http://172.16.93.38:8084/WebApplication2/c2c_offer.jsp";
     private static TextView fromDateEtxt;
     private static TextView fromTimeEtxt;
     String fromdate;
@@ -177,7 +177,7 @@ public class c2c_offer extends AppCompatActivity {
                 fromtime = fromTimeEtxt.getText().toString();
                 cost1 = cost.getText().toString();
                 comments = comment.getText().toString();
-                if (!fromdate.equals("") && !fromtime.equals("") && !from.equals("") && !to.equals("") && cost.equals("")) {
+                if (!fromdate.equals("") && !fromtime.equals("") && !from.equals("") && !to.equals("") && !cost1.equals("")) {
                     Log.d("date", fromDateEtxt.getText().toString());
                     Log.d("time", fromTimeEtxt.getText().toString());
                     Log.d("cost", cost.getText().toString());
@@ -208,31 +208,38 @@ public class c2c_offer extends AppCompatActivity {
             params.add(new BasicNameValuePair("time", fromtime));
             params.add(new BasicNameValuePair("cost", cost1));
             params.add(new BasicNameValuePair("comment", comments));
-            params.add(new BasicNameValuePair("session", userid));
+            params.add(new BasicNameValuePair("session",userid));
 
             JSONObject json = jsonParser.makeHttpRequest(url_create_product, "GET", params);
 
             String s=null;
+            String msg="";
 
             try {
                 s= json.getString("result");
                 Log.d("Msg", json.getString("result"));
                 if(s.equals("success")){
-                    //Toast.makeText(getApplicationContext(), "Successfully Registered", Toast.LENGTH_SHORT).show();
-                    Intent login = new Intent(c2c_offer.this,c2c_offer.class);
+                    msg= "Successfully Registered";
+                    Intent login = new Intent(c2c_offer.this,CarPooling.class);
                     startActivity(login);
                     finish();
                 }
                 else{
-                    //Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+                    msg= "Error";
                 }
             } catch (Exception e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
 
-            return null;
+            return msg;
         }
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
+        }
+
     }
 
 

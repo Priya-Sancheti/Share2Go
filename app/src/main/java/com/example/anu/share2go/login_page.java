@@ -24,7 +24,7 @@ public class login_page extends AppCompatActivity {
     com.example.anu.share2go.JSONParser jsonParser=new com.example.anu.share2go.JSONParser();
     EditText email=null;
     EditText pass=null;
-    private static String url_create_product = "http://172.16.92.8:9090/WebApplication2/login.jsp";
+    private static String url_create_product = "http://172.16.93.38:8084/WebApplication2/login.jsp";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,7 +80,7 @@ public class login_page extends AppCompatActivity {
             params.add(new BasicNameValuePair("pwd", password1));
 
             JSONObject json = jsonParser.makeHttpRequest(url_create_product, "GET", params);
-
+            Log.d("content",json.toString());
             String s=null;
 
             try {
@@ -96,6 +96,7 @@ public class login_page extends AppCompatActivity {
                     finish();
                 }
                 else{
+
                     Intent intent = getIntent();
                     finish();
                     startActivity(intent);

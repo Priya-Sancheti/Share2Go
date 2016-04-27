@@ -146,8 +146,7 @@ public class Offer_Ride extends AppCompatActivity {
                 Log.i(TAG, "An error occurred: " + status);
             }
         });
-        SharedPreferences prefs = getSharedPreferences("MyPref",MODE_PRIVATE);
-        userid = prefs.getString("id","0");
+
 
         setCurrentDate();
 
@@ -177,6 +176,8 @@ public class Offer_Ride extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences prefs = getSharedPreferences("MyPref",MODE_PRIVATE);
+                userid = prefs.getString("id","0");
                 duration=(RadioGroup)findViewById(R.id.radioGroup);
                 int rid= duration.getCheckedRadioButtonId();
                 dur=(RadioButton)findViewById(rid);
@@ -243,14 +244,14 @@ public class Offer_Ride extends AppCompatActivity {
                 s= json.getString("result");
                 Log.d("Msg", json.getString("result"));
                 if(s.equals("success")){
-                    Toast.makeText(getApplicationContext(), "Successfully Registered", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "Successfully Registered", Toast.LENGTH_SHORT).show();
 
                     Intent login = new Intent(Offer_Ride.this,CarPooling.class);
                     startActivity(login);
                     finish();
                 }
                 else{
-                    Toast.makeText(getApplicationContext(), "Error!!!", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "Error!!!", Toast.LENGTH_SHORT).show();
 
                     }
             } catch (Exception e) {

@@ -213,8 +213,8 @@ String TAG="";
             // Building Parameters
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             params.add(new BasicNameValuePair("from", from));
-            params.add(new BasicNameValuePair("via1", via1));
-            params.add(new BasicNameValuePair("via2", via2));
+           // params.add(new BasicNameValuePair("via1", via1));
+            //params.add(new BasicNameValuePair("via2", via2));
             params.add(new BasicNameValuePair("to", to));
             params.add(new BasicNameValuePair("date",fromdate));
             params.add(new BasicNameValuePair("time", fromtime));
@@ -230,13 +230,13 @@ String TAG="";
                 s= json.getString("result");
                 Log.d("Msg", json.getString("result"));
                 if(s.equals("success")){
-                    Toast.makeText(getApplicationContext(), "Searching for Ride", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "Searching for Ride", Toast.LENGTH_SHORT).show();
                     Intent login = new Intent(Take_A_Ride.this,CarPooling.class);
                     startActivity(login);
                     finish();
                 }
                 else{
-                    Toast.makeText(getApplicationContext(), "Error!!", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "Error!!", Toast.LENGTH_SHORT).show();
 
                 }
             } catch (Exception e) {

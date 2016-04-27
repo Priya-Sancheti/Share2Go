@@ -202,8 +202,8 @@ public class c2c_take extends AppCompatActivity {
             // Building Parameters
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             params.add(new BasicNameValuePair("from", from));
-            params.add(new BasicNameValuePair("via1", via1));
-            params.add(new BasicNameValuePair("via2", via2));
+            //params.add(new BasicNameValuePair("via1", via1));
+            //params.add(new BasicNameValuePair("via2", via2));
             params.add(new BasicNameValuePair("to", to));
             params.add(new BasicNameValuePair("date",fromdate));
             params.add(new BasicNameValuePair("time", fromtime));
@@ -217,13 +217,13 @@ public class c2c_take extends AppCompatActivity {
                 s= json.getString("result");
                 Log.d("Msg", json.getString("result"));
                 if(s.equals("success")){
-                    Toast.makeText(getApplicationContext(), "Searching for ride", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "Searching for ride", Toast.LENGTH_SHORT).show();
                     Intent login = new Intent(c2c_take.this,car_detail.class);
                     startActivity(login);
                     finish();
                 }
                 else{
-                    Toast.makeText(getApplicationContext(), "Error!!", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "Error!!", Toast.LENGTH_SHORT).show();
                 }
             } catch (Exception e) {
                 // TODO Auto-generated catch block

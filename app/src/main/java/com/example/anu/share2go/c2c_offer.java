@@ -208,7 +208,7 @@ public class c2c_offer extends AppCompatActivity {
             params.add(new BasicNameValuePair("time", fromtime));
             params.add(new BasicNameValuePair("cost", cost1));
             params.add(new BasicNameValuePair("comment", comments));
-            params.add(new BasicNameValuePair("session",userid));
+            params.add(new BasicNameValuePair("session", userid));
 
             JSONObject json = jsonParser.makeHttpRequest(url_create_product, "GET", params);
 
@@ -218,13 +218,13 @@ public class c2c_offer extends AppCompatActivity {
                 s= json.getString("result");
                 Log.d("Msg", json.getString("result"));
                 if(s.equals("success")){
-                    Toast.makeText(getApplicationContext(), "Successfully Registered", Toast.LENGTH_SHORT).show();
-                    Intent login = new Intent(c2c_offer.this,CarPooling.class);
+                    //Toast.makeText(getApplicationContext(), "Successfully Registered", Toast.LENGTH_SHORT).show();
+                    Intent login = new Intent(c2c_offer.this,c2c_offer.class);
                     startActivity(login);
                     finish();
                 }
                 else{
-                    Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
                 }
             } catch (Exception e) {
                 // TODO Auto-generated catch block

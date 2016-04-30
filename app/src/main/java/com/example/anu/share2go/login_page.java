@@ -1,5 +1,6 @@
 package com.example.anu.share2go;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -26,6 +27,8 @@ public class login_page extends AppCompatActivity {
     EditText email=null;
     EditText pass=null;
     private static String url_create_product = "http://172.16.92.8:9090/WebApplication2/login.jsp";
+    private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +61,16 @@ public class login_page extends AppCompatActivity {
         /**
          * Before starting background thread Show Progress Dialog
          * */
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(login_page.this);
+            progressDialog.setCancelable(true);
+            progressDialog.setMessage("Loading...");
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.setProgress(0);
+            progressDialog.show();
+        }
 
 
         /**
@@ -120,6 +133,7 @@ public class login_page extends AppCompatActivity {
         }
     }
 
+   
 
     private boolean validatePass(String pass) {
         if (pass != null && pass.length() > 7) {

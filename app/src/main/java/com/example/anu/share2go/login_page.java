@@ -133,7 +133,7 @@ public class login_page extends AppCompatActivity {
         }
     }
 
-   
+
 
     private boolean validatePass(String pass) {
         if (pass != null && pass.length() > 7) {

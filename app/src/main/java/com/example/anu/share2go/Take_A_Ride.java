@@ -2,6 +2,7 @@ package com.example.anu.share2go;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -44,7 +45,10 @@ import java.util.Locale;
  */
 public class Take_A_Ride extends AppCompatActivity {
     com.example.anu.share2go.JSONParser jsonParser=new com.example.anu.share2go.JSONParser();
+    private ProgressDialog progressDialog;
+
     private static String url_create_product = "http://172.16.92.8:9090/WebApplication2/take_a_ride.jsp";
+    private static String url= "http://172.16.92.8:9090/WebApplication2/show_offer.jsp";
     private static TextView fromDateEtxt;
     private static TextView fromTimeEtxt;
     private static DatePickerDialog fromDatePickerDialog;
@@ -180,6 +184,16 @@ String TAG="";
         /**
          * Before starting background thread Show Progress Dialog
          * */
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(Take_A_Ride.this);
+            progressDialog.setCancelable(true);
+            progressDialog.setMessage("Loading...");
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.setProgress(0);
+            progressDialog.show();
+        }
 
 
         /**
@@ -244,8 +258,7 @@ String TAG="";
         }
         @Override
         protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
         }
 
     }
@@ -436,7 +449,11 @@ String TAG="";
 
         }
         if (id == R.id.action_offer) {
+            List<NameValuePair> params = new ArrayList<NameValuePair>();
+            params.add(new BasicNameValuePair("session", userid));
+            JSONObject jobj=jsonParser.makeHttpRequest(url,"GET",params);
             Intent intent1 = new Intent(Take_A_Ride.this, show_offer.class);
+            intent1.putExtra("offerlist",jobj.toString());
             startActivity(intent1);
         }
         if (id == R.id.action_take) {

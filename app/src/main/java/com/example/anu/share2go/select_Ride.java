@@ -77,7 +77,9 @@ public class select_Ride extends AppCompatActivity {
 
         }
         if (id == R.id.action_offer) {
+
             Intent intent1 = new Intent(select_Ride.this, show_offer.class);
+
             startActivity(intent1);
         }
         if (id == R.id.action_take) {

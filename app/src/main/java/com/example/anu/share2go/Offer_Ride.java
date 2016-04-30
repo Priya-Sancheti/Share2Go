@@ -2,6 +2,7 @@ package com.example.anu.share2go;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -47,6 +48,7 @@ import java.util.Locale;
 public class Offer_Ride extends AppCompatActivity  {
     com.example.anu.share2go.JSONParser jsonParser=new com.example.anu.share2go.JSONParser();
     private static String url_create_product = "http://172.16.92.8:9090/WebApplication2/offer_ride.jsp";
+    private ProgressDialog progressDialog;
     private static TextView fromDateEtxt;
     private static TextView fromTimeEtxt;
     private static EditText cost;
@@ -226,6 +228,16 @@ public class Offer_Ride extends AppCompatActivity  {
         /**
          * Before starting background thread Show Progress Dialog
          * */
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(Offer_Ride.this);
+            progressDialog.setCancelable(true);
+            progressDialog.setMessage("Loading...");
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.setProgress(0);
+            progressDialog.show();
+        }
 
 
         /**
@@ -325,6 +337,13 @@ public class Offer_Ride extends AppCompatActivity  {
             }
 
             return null;
+        }
+
+        @Override
+        protected  void onPostExecute(String result)
+        {
+            progressDialog.dismiss();
+
         }
     }
 

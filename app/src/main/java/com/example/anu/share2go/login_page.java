@@ -42,13 +42,11 @@ public class login_page extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if(validateEmailid(email.getText().toString()) && validatePass(pass.getText().toString()) )
-                {
+                if (validateEmailid(email.getText().toString()) && validatePass(pass.getText().toString())) {
                     new CreateNewProduct().execute();
-                   // Intent intent = new Intent(login_page.this,select_Ride.class);
+                    // Intent intent = new Intent(login_page.this,select_Ride.class);
                     //startActivity(intent);
-                }
-                else{
+                } else {
                     Toast.makeText(getApplicationContext(), "Enter full details", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -88,7 +86,7 @@ public class login_page extends AppCompatActivity {
             params.add(new BasicNameValuePair("pwd", password1));
 
             JSONObject json = jsonParser.makeHttpRequest(url_create_product, "GET", params);
-            Log.d("content",json.toString());
+            Log.d("content", json.toString());
             String s=null;
 
             try {
@@ -131,6 +129,14 @@ public class login_page extends AppCompatActivity {
 
             return null;
         }
+        @Override
+        protected  void onPostExecute(String result)
+        {
+            progressDialog.dismiss();
+
+        }
+
+
     }
 
 

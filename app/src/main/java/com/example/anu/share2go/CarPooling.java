@@ -1,5 +1,6 @@
 package com.example.anu.share2go;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
@@ -24,6 +25,7 @@ public class CarPooling extends AppCompatActivity {
     String userid = null;
     JSONParser jsonParser = new JSONParser();
     private static String url_create_product = "http://172.16.92.8:9090/WebApplication2/offer_ride_car_check.jsp";
+    private ProgressDialog progressDialog;
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -46,6 +48,19 @@ public class CarPooling extends AppCompatActivity {
     }
 
     class CreateNewProduct extends AsyncTask<String, String, String> {
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(CarPooling.this);
+            progressDialog.setCancelable(true);
+            progressDialog.setMessage("Loading...");
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.setProgress(0);
+            progressDialog.show();
+        }
+
 
         @Override
         protected String doInBackground(String... args) {
@@ -76,6 +91,12 @@ public class CarPooling extends AppCompatActivity {
 
             }
             return null;
+
+        }
+        @Override
+        protected  void onPostExecute(String result)
+        {
+            progressDialog.dismiss();
 
         }
 

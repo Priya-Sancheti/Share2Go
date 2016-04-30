@@ -3,7 +3,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity">
     <item android:id="@+id/action_settings"
-        android:title="setting"
+        android:title="Settings"
         android:orderInCategory="100"
         app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_profile"
+        android:orderInCategory="100"
+        android:title="Profile"
+        app:showAsAction="never" />
+
+
+    <item
+        android:id="@+id/action_pass"
+        android:orderInCategory="100"
+        android:title="Change Password"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_offer"
+        android:orderInCategory="100"
+        android:title="Rides Offered"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_take"
+        android:orderInCategory="100"
+        android:title="Rides Requested"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_logout"
+        android:orderInCategory="100"
+        android:title="Logout"
+        app:showAsAction="never" />
+
+
 </menu>

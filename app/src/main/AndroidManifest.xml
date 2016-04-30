@@ -41,8 +41,13 @@
         <activity android:name=".c2c_take"></activity>
         <activity android:name=".car_detail"></activity>
         <activity android:name=".City2City"></activity>
-
-
+        <activity android:name=".List_Of_Rides"></activity>
+        <activity android:name=".full_details"></activity>
+        <activity android:name=".change_pass" />
+        <activity android:name=".profile" />
+        <activity android:name=".change_cardtls"/>
+        <activity android:name=".show_offer" />
+        <activity android:name=".show_take"/>
     </application>
 
 

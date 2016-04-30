@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -24,7 +25,7 @@ public class login_page extends AppCompatActivity {
     com.example.anu.share2go.JSONParser jsonParser=new com.example.anu.share2go.JSONParser();
     EditText email=null;
     EditText pass=null;
-    private static String url_create_product = "http://172.16.93.38:8084/WebApplication2/login.jsp";
+    private static String url_create_product = "http://172.16.92.8:9090/WebApplication2/login.jsp";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,21 +38,15 @@ public class login_page extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!validateEmailid(email.getText().toString()))
-                {
-                    email.setError("invalid email-id");
-                    email.requestFocus();
-                }
-                if(!validatePass(pass.getText().toString()))
-                {
-                    pass.setError("password should be aleast 8 character long");
-                    pass.requestFocus();
-                }
+
                 if(validateEmailid(email.getText().toString()) && validatePass(pass.getText().toString()) )
                 {
                     new CreateNewProduct().execute();
                    // Intent intent = new Intent(login_page.this,select_Ride.class);
                     //startActivity(intent);
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "Enter full details", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -91,15 +86,30 @@ public class login_page extends AppCompatActivity {
                     SharedPreferences.Editor editor = pref.edit();
                     editor.putString("id",json.getString("user_id"));
                     editor.commit();
+                    runOnUiThread(new Runnable() {
+
+                        public void run() {
+
+                            Toast.makeText(getApplicationContext(), "Login Successful!!!", Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
                     Intent login = new Intent(login_page.this,select_Ride.class);
                     startActivity(login);
                     finish();
                 }
                 else{
+                    runOnUiThread(new Runnable() {
 
-                    Intent intent = getIntent();
-                    finish();
-                    startActivity(intent);
+                        public void run() {
+                            email.setError("Invalid Email");
+                            pass.setError("Invalid Password");
+                            email.setText("");
+                            pass.setText("");
+                        }});
+                            //Toast.makeText(getApplicationContext(), "Login Unsuccessfull!!!", Toast.LENGTH_SHORT).show();
+
+
                 }
             } catch (Exception e) {
                 // TODO Auto-generated catch block

@@ -12,6 +12,8 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -29,6 +31,7 @@ import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
@@ -41,9 +44,9 @@ import java.util.Locale;
 /**
  * Created by Priya on 3/7/2016.
  */
-public class Offer_Ride extends AppCompatActivity {
+public class Offer_Ride extends AppCompatActivity  {
     com.example.anu.share2go.JSONParser jsonParser=new com.example.anu.share2go.JSONParser();
-    private static String url_create_product = "http://172.16.93.38:8084/WebApplication2/offer_ride.jsp";
+    private static String url_create_product = "http://172.16.92.8:9090/WebApplication2/offer_ride.jsp";
     private static TextView fromDateEtxt;
     private static TextView fromTimeEtxt;
     private static EditText cost;
@@ -71,7 +74,8 @@ public class Offer_Ride extends AppCompatActivity {
     String durationstr;
     String cost1 ;
     String comments ;
-
+    String lat;
+    String lng;
     String TAG ="" ;
     String userid=null;
 
@@ -89,6 +93,9 @@ public class Offer_Ride extends AppCompatActivity {
             public void onPlaceSelected(Place place) {
                 // TODO: Get info about the selected place.
                 from = place.getAddress().toString();
+                lat= String.valueOf( place.getLatLng().latitude);
+                lng= String.valueOf(place.getLatLng().longitude);
+
                 Log.d("source: ", place.getName().toString());//get place details here
             }
 
@@ -186,18 +193,22 @@ public class Offer_Ride extends AppCompatActivity {
                  durationstr= dur.getText().toString();
                  cost1 = cost.getText().toString();
                  comments = comment.getText().toString();
-                if(!fromdate.equals("") && !fromtime.equals("") && !to.equals("") && !from.equals("")  && !cost.equals("") &&!durationstr.equals(" ")) {
+               if(!fromdate.equals("") && !fromtime.equals("") && !to.equals("") && !from.equals("") &&  !cost.equals("") &&!durationstr.equals(" ")) {
 
 //                Log.d("via1", via1.getText().toString());
 //                Log.d("via2", via2.getText().toString());
 //                Log.d("dest", destination.getText().toString());
-                    Log.d("date", fromDateEtxt.getText().toString());
-                    Log.d("time", fromTimeEtxt.getText().toString());
-                    Log.d("duration", dur.getText().toString());
-                    Log.d("cost", cost.getText().toString());
-                    Log.d("comment", comment.getText().toString());
-                    Log.d("session", userid);
-                    new CreateNewProduct().execute();
+                   Log.d("date", fromDateEtxt.getText().toString());
+                   Log.d("time", fromTimeEtxt.getText().toString());
+                   Log.d("duration", dur.getText().toString());
+                   Log.d("cost", cost.getText().toString());
+                   Log.d("comment", comment.getText().toString());
+                   Log.d("session", userid);
+
+
+
+
+                new CreateNewProduct().execute();
                 }
                 else {
                     Toast.makeText(getApplicationContext(), "fill all the details", Toast.LENGTH_SHORT).show();
@@ -208,6 +219,7 @@ public class Offer_Ride extends AppCompatActivity {
         });
 
     }
+
 
     class CreateNewProduct extends AsyncTask<String, String, String> {
 
@@ -223,6 +235,40 @@ public class Offer_Ride extends AppCompatActivity {
         protected String doInBackground(String... args) {
 
             // Building Parameters
+            String url_create_product1 = "https://maps.googleapis.com/maps/api/directions/json";
+            List<NameValuePair> param = new ArrayList<NameValuePair>();
+            param.add(new BasicNameValuePair("origin",from));
+            //param.add(new BasicNameValuePair("via",via1+"|"+via2));
+            param.add(new BasicNameValuePair("destination",to));
+            param.add(new BasicNameValuePair("key", "AIzaSyB9sJiC72XWKQ_QiwfcijolO6MI2h2gfVg"));
+            String distance1="";
+            String duration1="";
+
+            JSONObject json1 = jsonParser.makeHttpRequest(url_create_product1, "GET", param);
+
+            System.out.println("json="+json1);
+
+
+            try {
+                JSONArray    jsonRoutes = json1.getJSONArray("routes");
+            for (int i = 0; i < jsonRoutes.length(); i++) {
+                JSONObject jsonRoute = (JSONObject) jsonRoutes.get(i);
+
+                JSONArray jsonLegs = jsonRoute.getJSONArray("legs");
+                    JSONObject jsonLeg = jsonLegs.getJSONObject(0);
+                    JSONObject jsonDistance = jsonLeg.getJSONObject("distance");
+                    JSONObject jsonDuration = jsonLeg.getJSONObject("duration");
+
+                    distance1 =  String.valueOf(jsonDistance.getInt("value"));
+                    duration1 =  String.valueOf(jsonDuration.getInt("value"));
+                    System.out.println("distance="+distance1+" "+duration1+" ");
+                }
+
+            } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            System.out.println("heloooooooooooo");
+
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             params.add(new BasicNameValuePair("from", from));
             params.add(new BasicNameValuePair("via1", via1));
@@ -234,6 +280,10 @@ public class Offer_Ride extends AppCompatActivity {
             params.add(new BasicNameValuePair("cost", cost1));
             params.add(new BasicNameValuePair("comment", comments));
             params.add(new BasicNameValuePair("session", userid));
+            params.add(new BasicNameValuePair("lat",lat));
+            params.add(new BasicNameValuePair("lng",lng));
+            params.add(new BasicNameValuePair("distance",distance1));
+            params.add(new BasicNameValuePair("journeytime",duration1));
 
             JSONObject json = jsonParser.makeHttpRequest(url_create_product, "GET", params);
 
@@ -269,9 +319,9 @@ public class Offer_Ride extends AppCompatActivity {
 
 
                     }
-            } catch (Exception e) {
+            } catch (Exception e1) {
                 // TODO Auto-generated catch block
-                e.printStackTrace();
+                e1.printStackTrace();
             }
 
             return null;
@@ -427,7 +477,57 @@ public class Offer_Ride extends AppCompatActivity {
 
 
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+
+        return super.onCreateOptionsMenu(menu);
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_pass) {
+            Intent intent1 = new Intent(Offer_Ride.this, change_pass.class);
+            startActivity(intent1);
+
+        }
+        if (id == R.id.action_profile) {
+            Intent intent1 = new Intent(Offer_Ride.this, profile.class);
+            startActivity(intent1);
+
+        }
+
+        if (id == R.id.action_logout) {
+            SharedPreferences sharedpreferences = getSharedPreferences("MyPref", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.clear();
+            editor.commit();
+            Intent i=new Intent(Offer_Ride.this,MainActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i);
+            finish();
+
+        }
+        if (id == R.id.action_cardtls) {
+            Intent intent1 = new Intent(Offer_Ride.this, change_cardtls.class);
+            startActivity(intent1);
+
+        }
+        if (id == R.id.action_offer) {
+            Intent intent1 = new Intent(Offer_Ride.this, show_offer.class);
+            startActivity(intent1);
+        }
+        if (id == R.id.action_take) {
+            Intent intent1 = new Intent(Offer_Ride.this, show_take.class);
+            startActivity(intent1);
+        }
+        return super.onOptionsItemSelected(item);
+
+
+    }
+
+
+
 }

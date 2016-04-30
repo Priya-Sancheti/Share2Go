@@ -7,4 +7,39 @@
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_pass"
+        android:orderInCategory="100"
+        android:title="Change Password"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_cardtls"
+        android:orderInCategory="100"
+        android:title="Change car details "
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_profile"
+        android:orderInCategory="100"
+        android:title="Profile"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_logout"
+        android:orderInCategory="100"
+        android:title="Logout"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_offer"
+        android:orderInCategory="100"
+        android:title="Rides Offered"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_take"
+        android:orderInCategory="100"
+        android:title="Rides Requested"
+        app:showAsAction="never" />
+
+
 </menu>

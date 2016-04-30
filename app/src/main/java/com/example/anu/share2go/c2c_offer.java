@@ -12,6 +12,8 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -41,7 +43,7 @@ import java.util.Locale;
  */
 public class c2c_offer extends AppCompatActivity {
     com.example.anu.share2go.JSONParser jsonParser=new com.example.anu.share2go.JSONParser();
-    private static String url_create_product = "http://172.16.93.38:8084/WebApplication2/c2c_offer.jsp";
+    private static String url_create_product = "http://172.16.92.8:9090/WebApplication2/c2c_offer.jsp";
     private static TextView fromDateEtxt;
     private static TextView fromTimeEtxt;
     String fromdate;
@@ -390,7 +392,51 @@ public class c2c_offer extends AppCompatActivity {
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_pass) {
+            Intent intent1 = new Intent(c2c_offer.this,change_pass.class);
+            startActivity(intent1);
+
+        }
+        if (id == R.id.action_profile) {
+            Intent intent1 = new Intent(c2c_offer.this,profile.class);
+            startActivity(intent1);
+
+        }
+        if (id == R.id.action_logout) {
+            SharedPreferences sharedpreferences = getSharedPreferences("MyPref", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.clear();
+            editor.commit();
+            Intent i=new Intent(c2c_offer.this,MainActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i);
+            finish();
+        }
+        if (id == R.id.action_cardtls) {
+            Intent intent1 = new Intent(c2c_offer.this, change_cardtls.class);
+            startActivity(intent1);
+
+        }
+        if (id == R.id.action_offer) {
+            Intent intent1 = new Intent(c2c_offer.this, show_offer.class);
+            startActivity(intent1);
+        }
+        if (id == R.id.action_take) {
+            Intent intent1 = new Intent(c2c_offer.this, show_take.class);
+            startActivity(intent1);
+        }
+
+
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -29,7 +29,7 @@ import java.util.regex.Pattern;
 
 public class c2c_car_detail extends AppCompatActivity {
     com.example.anu.share2go.JSONParser jsonParser=new com.example.anu.share2go.JSONParser();
-    private static String url_create_product = "http://172.16.93.19:8084/WebApplication2/c2c_car.jsp";
+    private static String url_create_product = "http://172.16.92.8:9090/WebApplication2/c2c_car.jsp";
     EditText model;
     EditText color;
     EditText car_number;
@@ -40,7 +40,7 @@ public class c2c_car_detail extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.car_detail);
+        setContentView(R.layout.c2c_car_detail);
         View backgroundimage = findViewById(R.id.back);
         Drawable background = backgroundimage.getBackground();
         background.setAlpha(80);

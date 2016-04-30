@@ -29,7 +29,7 @@ import java.util.regex.Pattern;
 
 public class car_detail extends AppCompatActivity {
     com.example.anu.share2go.JSONParser jsonParser=new com.example.anu.share2go.JSONParser();
-    private static String url_create_product = "http://172.16.93.38:8084/WebApplication2/car.jsp";
+    private static String url_create_product = "http://172.16.92.8:9090/WebApplication2/car.jsp";
     EditText model;
     EditText color;
     EditText car_number;

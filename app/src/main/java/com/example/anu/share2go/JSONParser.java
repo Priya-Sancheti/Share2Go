@@ -16,6 +16,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -110,9 +111,12 @@ public class JSONParser {
 
     }
     /////////////////////////////////
-    public JSONArray getJSONFromUrl(String url) {
+    public JSONArray getJSONFromUrl(String url,List<NameValuePair> params) {
 
         StringBuilder builder = new StringBuilder();
+        String paramString = URLEncodedUtils.format(params, "utf-8");
+        url += "?" + paramString;
+        Log.d("url",url);
         HttpClient client = new DefaultHttpClient();
         HttpGet httpGet = new HttpGet(url);
         try {
@@ -122,11 +126,14 @@ public class JSONParser {
             if (statusCode == 200) {
                 HttpEntity entity = response.getEntity();
                 InputStream content = entity.getContent();
+                Log.d("data",content.toString());
                 BufferedReader reader = new BufferedReader(new InputStreamReader(content));
                 String line;
                 while ((line = reader.readLine()) != null) {
                     builder.append(line);
+
                 }
+                Log.d("array",builder.toString());
             } else {
                 Log.e("==>", "Failed to download file");
             }
@@ -138,9 +145,11 @@ public class JSONParser {
 
         // Parse String to JSON object
         try {
-            jarray = new JSONArray( builder.toString());
+            JSONTokener tokener = new JSONTokener(builder.toString());
+
+            jarray = new JSONArray( tokener);
         } catch (JSONException e) {
-            Log.e("JSON Parser", "Error parsing data " + e.toString());
+            Log.e("JSON Parser", "Error parsing data " + e.getMessage());
         }
 
         // return JSON Object
@@ -196,6 +205,7 @@ public class JSONParser {
             }
             is.close();
             json = sb.toString();
+            Log.d("takeride",json);
         } catch (Exception e) {
             Log.e("Buffer Error", "Error converting result " + e.toString());
         }
